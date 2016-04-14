@@ -12,20 +12,20 @@ namespace LinqPresentation
 			School school = new School();
 
 			#region | Loading |
-
 			var watch = System.Diagnostics.Stopwatch.StartNew();
 
-			Utilities.Utils.LoadPeopleFromCsv(ref school);
+			// Utilities.Utils.LoadPeopleFromCsv(ref school);
+			school = Utilities.Utils.ParallelLoadPeopleFromCsv(school);
 
 			watch.Stop();
-			System.Console.WriteLine($"Loading: {watch.ElapsedMilliseconds}ms");
+			System.Console.WriteLine($"Loading: {watch.Elapsed}");
 
 			#endregion
 
 			#region | Where |
 
 			//#region | NoLINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 			//var whereNL = new System.Collections.Generic.List<Models.People.Student>();
 			//foreach (var student in school.Students)
@@ -37,16 +37,16 @@ namespace LinqPresentation
 			//}
 
 			//watch.Stop();
-			//System.Console.WriteLine($"Where [NoLINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"Where [NoLINQ]: {watch.ElapsedMilliseconds}");
 			//#endregion
 
 			//#region | LINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 			//var whereL = school.Students.Where(s => (s.ClassId >= 10) && (s.ClassId <= 30));
 
 			//watch.Stop();
-			//System.Console.WriteLine($"Where [LINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"Where [LINQ]: {watch.Elapsed}");
 			//#endregion
 
 			//System.Console.WriteLine($"Where: {whereNL.Count} vs. {whereL.Count()}");
@@ -65,11 +65,11 @@ namespace LinqPresentation
 			//}
 
 			//watch.Stop();
-			//System.Console.WriteLine($"Sum [NoLINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"Sum [NoLINQ]: {watch.Elapsed}");
 			//#endregion
 
 			//#region | LINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 			//#region | Case 01 |
 
@@ -85,7 +85,7 @@ namespace LinqPresentation
 			//#endregion
 
 			//watch.Stop();
-			//System.Console.WriteLine($"Sum [LINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"Sum [LINQ]: {watch.Elapsed}");
 			//#endregion
 
 			//System.Console.WriteLine($"Sum: {sumNL} vs. {sumL}");
@@ -95,7 +95,7 @@ namespace LinqPresentation
 			//int maxNL = -1, maxL = -1;
 
 			//#region | NoLINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 			//foreach (var student in school.Students)
 			//{
@@ -106,18 +106,18 @@ namespace LinqPresentation
 			//}
 
 			//watch.Stop();
-			//System.Console.WriteLine($"Max [NoLINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"Max [NoLINQ]: {watch.Elapsed}");
 			//#endregion
 
 			//#region | LINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 			//maxL = (int)school.Students.
 			//	Where(s => s.ClassId.HasValue).
 			//	Max(x => x.ClassId.Value);
 
 			//watch.Stop();
-			//System.Console.WriteLine($"Max [LINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"Max [LINQ]: {watch.Elapsed}");
 			//#endregion
 
 			//System.Console.WriteLine($"Max: {maxNL} vs. {maxL}");
@@ -128,7 +128,7 @@ namespace LinqPresentation
 			//	selectNL = new System.Collections.Generic.List<string>();
 
 			//#region | NoLINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 			//foreach (var teacher in school.Teachers)
 			//{
@@ -136,16 +136,16 @@ namespace LinqPresentation
 			//}
 
 			//watch.Stop();
-			//System.Console.WriteLine($"Select [NoLINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"Select [NoLINQ]: {watch.Elapsed}");
 			//#endregion
 
 			//#region | LINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 			//var selectL = school.Teachers.Select(t => string.Join(",", t.FirstName, t.LastName));
 
 			//watch.Stop();
-			//System.Console.WriteLine($"Select [LINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"Select [LINQ]: {watch.Elapsed}");
 			//#endregion
 
 			#endregion
@@ -153,16 +153,16 @@ namespace LinqPresentation
 			#region | OrderBy |
 
 			//#region | NoLINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 
 
 			//watch.Stop();
-			//System.Console.WriteLine($"OrderBy [NoLINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"OrderBy [NoLINQ]: {watch.Elapsed}");
 			//#endregion
 
 			//#region | LINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 			//#region ASC
 
@@ -181,7 +181,7 @@ namespace LinqPresentation
 			//#endregion
 
 			//watch.Stop();
-			//System.Console.WriteLine($"OrderBy [LINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"OrderBy [LINQ]: {watch.Elapsed}");
 			//#endregion
 
 			#endregion
@@ -192,7 +192,7 @@ namespace LinqPresentation
 			//	groupByNLfalse = new System.Collections.Generic.List<Models.People.Student>();
 
 			//#region | NoLINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 			//foreach (var student in school.Students)
 			//{
@@ -210,18 +210,18 @@ namespace LinqPresentation
 			//}
 
 			//watch.Stop();
-			//System.Console.WriteLine($"GroupBy [NoLINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"GroupBy [NoLINQ]: {watch.Elapsed}");
 			//#endregion
 
 			//#region | LINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 			//var groupByL = school.Students.
 			//	Where(s => s.ClassId.HasValue).
 			//	GroupBy(s => s.ClassId.Value.IsEven());
 
 			//watch.Stop();
-			//System.Console.WriteLine($"GroupBy [LINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"GroupBy [LINQ]: {watch.Elapsed}");
 			//#endregion
 			//
 			#endregion
@@ -231,7 +231,7 @@ namespace LinqPresentation
 			//	skipNL = new System.Collections.Generic.List<Models.People.Teacher>();
 
 			//#region | NoLINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 			//int i = 5;
 			//foreach (var teacher in school.Teachers)
@@ -243,11 +243,11 @@ namespace LinqPresentation
 			//}
 
 			//watch.Stop();
-			//System.Console.WriteLine($"Skip [NoLINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"Skip [NoLINQ]: {watch.Elapsed}");
 			//#endregion
 
 			//#region | LINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 			//var skipL = school.Teachers.Skip(5);
 
@@ -261,7 +261,7 @@ namespace LinqPresentation
 			//#endregion
 
 			//watch.Stop();
-			//System.Console.WriteLine($"Skip [LINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"Skip [LINQ]: {watch.Elapsed}");
 			//#endregion
 
 			#endregion
@@ -271,7 +271,7 @@ namespace LinqPresentation
 			//	takeNL = new System.Collections.Generic.List<Models.People.Teacher>();
 
 			//#region | NoLINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 			//int i = 0;
 			//foreach (var teacher in school.Teachers)
@@ -287,11 +287,11 @@ namespace LinqPresentation
 			//}
 
 			//watch.Stop();
-			//System.Console.WriteLine($"Take [NoLINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"Take [NoLINQ]: {watch.Elapsed}");
 			//#endregion
 
 			//#region | LINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 			//var takeL = school.Students.Take(5);
 
@@ -305,7 +305,7 @@ namespace LinqPresentation
 			//#endregion
 
 			//watch.Stop();
-			//System.Console.WriteLine($"Take [LINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"Take [LINQ]: {watch.Elapsed}");
 			//#endregion
 
 			#endregion
@@ -315,7 +315,7 @@ namespace LinqPresentation
 			//	reverceNL = new System.Collections.Generic.List<Models.People.Teacher>();
 
 			//#region | NoLINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 			//for (int i = school.Teachers.Count - 1; i >= 0; i--)
 			//{
@@ -323,16 +323,16 @@ namespace LinqPresentation
 			//}
 
 			//watch.Stop();
-			//System.Console.WriteLine($"Reverce [NoLINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"Reverce [NoLINQ]: {watch.Elapsed}");
 			//#endregion
 
 			//#region | LINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 			//var reverceL = school.Teachers.Reverse();
 
 			//watch.Stop();
-			//System.Console.WriteLine($"Reverce [LINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($"Reverce [LINQ]: {watch.Elapsed}");
 			//#endregion
 
 			#endregion
@@ -340,21 +340,21 @@ namespace LinqPresentation
 			#region |  |
 
 			//#region | NoLINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 
 
 			//watch.Stop();
-			//System.Console.WriteLine($" [NoLINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($" [NoLINQ]: {watch.Elapsed}");
 			//#endregion
 
 			//#region | LINQ |
-			//watch = System.Diagnostics.Stopwatch.StartNew();
+			//watch.Restart();
 
 
 
 			//watch.Stop();
-			//System.Console.WriteLine($" [LINQ]: {watch.ElapsedMilliseconds}ms");
+			//System.Console.WriteLine($" [LINQ]: {watch.Elapsed}");
 			//#endregion
 
 			//System.Console.WriteLine($": {0} vs. {0}");

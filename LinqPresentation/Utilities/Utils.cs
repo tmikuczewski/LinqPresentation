@@ -26,6 +26,27 @@ namespace LinqPresentation.Utilities
 			}
 		}
 
+		public static Models.School ParallelLoadPeopleFromCsv(Models.School school)
+		{
+			System.Threading.Tasks.Parallel.ForEach(System.IO.File.ReadLines("../../Files/FNG.csv"), (line, _, lineNo) =>
+			{
+				var row = line.Split(',');
+
+				DateTime date = DateTime.Parse(row[2], new System.Globalization.CultureInfo("en-US"));
+
+				if ((DateTime.Today.Year - date.Year) <= 25)
+				{
+					school.Students.Add(new Models.People.Student(row[0], row[1], date, RandomClassId()));
+				}
+				else
+				{
+					school.Teachers.Add(new Models.People.Teacher(row[0], row[1], date, RandomEmploymentDate(date.Year)));
+				}
+			});
+
+			return school;
+		}
+
 		private static uint RandomClassId(int classesCount = 100) => ((uint)random.Next(classesCount));
 
 		private static DateTime RandomEmploymentDate(int birthYear)
