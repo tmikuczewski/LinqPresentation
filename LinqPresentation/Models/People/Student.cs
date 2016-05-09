@@ -1,8 +1,10 @@
-﻿namespace LinqPresentation.Models.People
+﻿using System;
+
+namespace LinqPresentation.Models.People
 {
 	public class Student : Base.Person
 	{
-		public Student(string firstName, string lastName, System.DateTime? birthDate, uint? classId = null)
+		public Student(string firstName, string lastName, DateTime? birthDate, uint? classId = null)
 			: base(firstName, lastName, birthDate)
 		{
 			this.ClassId = classId;

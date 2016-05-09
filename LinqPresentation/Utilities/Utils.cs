@@ -1,46 +1,53 @@
 ﻿using System;
+using System.Globalization;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+
+using LinqPresentation.Models;
+using LinqPresentation.Models.People;
 
 namespace LinqPresentation.Utilities
 {
 	public static class Utils
 	{
-		public static void LoadPeopleFromCsv(ref Models.School school)
+		public static void LoadPeopleFromCsv(ref School school)
 		{
-			using (var reader = new System.IO.StreamReader(System.IO.File.OpenRead("../../Files/FNG.csv"), System.Text.Encoding.Default, true))
+			using (var reader = new StreamReader(File.OpenRead("../../Files/FNG.csv"), Encoding.Default, true))
 			{
 				while (!reader.EndOfStream)
 				{
 					var row = reader.ReadLine().Split(',');
 
-					DateTime date = DateTime.Parse(row[2], new System.Globalization.CultureInfo("en-US"));
+					DateTime date = DateTime.Parse(row[2], new CultureInfo("en-US"));
 
 					if ((DateTime.Today.Year - date.Year) <= 25)
 					{
-						school.Students.Add(new Models.People.Student(row[0], row[1], date, RandomClassId()));
+						school.Students.Add(new Student(row[0], row[1], date, RandomClassId()));
 					}
 					else
 					{
-						school.Teachers.Add(new Models.People.Teacher(row[0], row[1], date, RandomEmploymentDate(date.Year)));
+						school.Teachers.Add(new Teacher(row[0], row[1], date, RandomEmploymentDate(date.Year)));
 					}
 				}
 			}
 		}
 
-		public static Models.School ParallelLoadPeopleFromCsv(Models.School school)
+		public static School ParallelLoadPeopleFromCsv(School school)
 		{
-			System.Threading.Tasks.Parallel.ForEach(System.IO.File.ReadLines("../../Files/FNG.csv"), (line, _, lineNo) =>
+			Parallel.ForEach(File.ReadLines("../../Files/FNG.csv"), (line) =>
 			{
 				var row = line.Split(',');
 
-				DateTime date = DateTime.Parse(row[2], new System.Globalization.CultureInfo("en-US"));
+				DateTime date = DateTime.Parse(row[2], new CultureInfo("en-US"));
 
 				if ((DateTime.Today.Year - date.Year) <= 25)
 				{
-					school.Students.Add(new Models.People.Student(row[0], row[1], date, RandomClassId()));
+					school.Students.Add(new Student(row[0], row[1], date, RandomClassId()));
 				}
 				else
 				{
-					school.Teachers.Add(new Models.People.Teacher(row[0], row[1], date, RandomEmploymentDate(date.Year)));
+					school.Teachers.Add(new Teacher(row[0], row[1], date, RandomEmploymentDate(date.Year)));
 				}
 			});
 

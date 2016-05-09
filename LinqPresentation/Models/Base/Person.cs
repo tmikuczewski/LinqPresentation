@@ -1,8 +1,10 @@
-﻿namespace LinqPresentation.Models.Base
+﻿using System;
+
+namespace LinqPresentation.Models.Base
 {
 	public abstract class Person
 	{
-		public Person(string firstName, string lastName, System.DateTime? birthDate = null)
+		public Person(string firstName, string lastName, DateTime? birthDate = null)
 		{
 			this.FirstName = firstName;
 			this.LastName = lastName;
@@ -15,6 +17,6 @@
 
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
-		public System.DateTime? BirthDay { get; set; }
+		public DateTime? BirthDay { get; set; }
 	}
 }
